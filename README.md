@@ -1,0 +1,3 @@
+Hangman
+=======
+This is a fun little game that I made to practice my react coding skills and CSS animations. A word is randomly selected from the word list and the user can then guess letters until they finish the word - or until they are killed if they guess too many wrong letters. I particularly enjoyed making the hangman drawings, which I originally drew in Illustrator before converting them to code and animating them. The hardest part was probably figuring out how to map the placeholder with an index in order to identify what part of the placeholder needed to change, and then to update it with its new value.
