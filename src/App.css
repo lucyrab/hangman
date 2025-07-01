@@ -3,6 +3,9 @@ body {
   font-optical-sizing: auto;
   font-weight: 300;
   font-style: normal;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .game-items {
@@ -39,6 +42,7 @@ svg {
   font-size: 1.5em;
   width: 1.2em;
   text-align: center;
+  caret-color: black;
 }
 
 .text-field:focus {
@@ -61,14 +65,27 @@ svg {
 }
 
 .popup {
-  margin: 100px auto;
-  padding: 80px 50px;
   background: #fff;
   border-radius: 5px;
-  width: 30%;
   position: relative;
-  transition: all 5s ease-in;
   text-align: center;
+  color: black;
+}
+
+@media only screen and (max-width: 600px) { 
+  .popup {
+    width: 96%;
+    margin: 35% 2%;
+    padding: 90px 0;
+  }
+}
+
+@media only screen and (min-width: 600px) { 
+  .popup {
+    width: 550px;
+    margin: 150px auto;
+    padding: 90px 50px;
+  }
 }
 
 .feedback {
