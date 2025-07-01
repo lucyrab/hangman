@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
 import './App.css'
 import wordListData from './5000-more-common.txt?raw'
+import HangmanDrawing from './components/HangmanDrawing.jsx'
+import Placeholder from './components/Placeholder.jsx'
+import UserInput from './components/UserInput.jsx'
+import MistakeLetters from './components/MistakeLetters.jsx'
+import Popup from './components/Popup.jsx'
 
 function App() {
   const wordList = wordListData.split('\n')
@@ -41,7 +46,6 @@ function App() {
     setUserLetter(userInput)
     setUserInput('')
     if (input.length == 1 && input != '' && placeholder.findIndex((element) => element == input.toLowerCase()) == -1 && mistakeLetters.findIndex((element) => element == input.toLowerCase()) == -1 && currentWord.includes(input.toLowerCase())) {
-      console.log('correct answer')
       setPlaceholder((prevPlaceholder) => (
         prevPlaceholder.map((value, index) => (
           (value == '_' && input.toLowerCase() == currentWord[index]) ? input.toLowerCase() : value
@@ -79,31 +83,13 @@ function App() {
   return (
     <>
       <div className='game-items'>
-        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 185.36 260.68">
-        <line x1="0" y1="260.18" x2="117.37" y2="260.18" fill="#fff" stroke="#000" strokeMiterlimit="10"/>
-        <line x1="58.68" y1="260.18" x2="58.68" y2=".5" fill="#fff" stroke="#000" strokeMiterlimit="10"/>
-        <line x1="149.65" y1=".5" x2="58.68" y2=".5" fill="#fff" stroke="#000" strokeMiterlimit="10"/>
-        <line x1="149.65" y1="39.57" x2="149.65" y2=".5" fill="#fff" stroke="#000" strokeMiterlimit="10"/>
-        {mistakesNumber > 0 && <ellipse className='path' cx="149.65" cy="62.93" rx="19" ry="23" fill="none" stroke="#000" strokeMiterlimit="10"/>}
-        {mistakesNumber > 1 && <line className='path' x1="149.65" y1="85.68" x2="149.65" y2="156.94" fill="#fff" stroke="#000" strokeMiterlimit="10"/>}
-        {mistakesNumber > 2 && <line className='path' x1="149.65" y1="113.51" x2="184.99" y2="78.17" fill="#fff" stroke="#000" strokeMiterlimit="10"/>}
-        {mistakesNumber > 3 && <line className='path' x2="116.33" y2="78.17" x1="149.65" y1="113.51" fill="#fff" stroke="#000" strokeMiterlimit="10"/>}
-        {mistakesNumber > 4 && <line className='path' x1="149.65" y1="156.44" x2="184.99" y2="196.53" fill="#fff" stroke="#000" strokeMiterlimit="10"/>}
-        {mistakesNumber > 5 && <line className='path' x1="149.65" y1="156.44" x2="116.33" y2="196.53" fill="#fff" stroke="#000" strokeMiterlimit="10"/>}
-      </svg>
-
-      <div className='placeholder' >{placeholder} </div>
-        <input value={userInput} onChange={e => setUserInput(e.target.value)} className={animationActive ? 'text-field animate' : 'text-field'} onAnimationEnd={handleAnimationEnd} onKeyDown={handleKeyDown} />
-        <div className='mistake-letters'>{mistakeLetters}</div> 
+        <HangmanDrawing mistakesNumber={mistakesNumber}/>
+        <Placeholder placeholder={placeholder} />
+        <UserInput userInput={userInput} onChange={e => setUserInput(e.target.value)} animationActive={animationActive} handleAnimationEnd={handleAnimationEnd} handleKeyDown={handleKeyDown}/>
+        <MistakeLetters mistakeLetters={mistakeLetters} /> 
       </div>
 
-      {isPlaying == false && <div className='overlay'>
-        <div className='popup' >
-          <div className='feedback'>{userMessage}</div>
-          <input className='again-button' type='button' value='Play again' onClick={playAgain}/>
-        </div>
-      </div>
-    }
+      {isPlaying == false && <Popup onClick={playAgain} userMessage={userMessage}/> }
     
     </>
   )
